@@ -1,5 +1,6 @@
 import React,{useState} from "react"
 import { useNavigate } from "react-router-dom"; 
+import {NewAccount,CreateUser} from "./create_user";
 import {
     Flex,
     Stack,
@@ -19,14 +20,25 @@ import{
     LockIcon,
 } from "@chakra-ui/icons"
 
+
+
 const SignUp=()=>{
+  
+  var Web3 = require('web3');
+  var web3 = new Web3('http://127.0.0.1:7545');
+  const sqlite3 = require('sqlite3').verbose();
+  let db = new sqlite3.Database('production.db');
+  
     let navigate = useNavigate();
     const [name,setName] = useState("");
     const [pass,setPass] = useState("");
     const [confirmPass,setConfirmPass] = useState("");
-
+    
     const [passError, setPassError] = useState(false);
-
+    
+    const create_user=()=>{
+      CreateUser(name,pass);
+    }
     
 
     const goLogin=()=>{navigate("/login",{replace: false})};
@@ -134,7 +146,7 @@ const SignUp=()=>{
                         <Button
                           h="20%"
                           w="100%"
-                          
+                          onClick={createUser}
                           bgColor="#075D9F"
                           textColor="whiteAlpha.600"
                           _hover={{bgColor:"#0C3E66"}}
