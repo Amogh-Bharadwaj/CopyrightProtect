@@ -64,6 +64,7 @@ const AssetManage =()=>{
                     return(
                    <Box
                     key={ass.ID}
+                    rounded="5%"
                     boxShadow="0px 0px 0px 3px black"
                     w="50%"
                     h="15vh"

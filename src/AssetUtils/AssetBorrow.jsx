@@ -48,11 +48,7 @@ const AssetBorrow =()=>{
                 <FormControl
                  w="full"
                  textColor="white">
-                    <FormLabel py={5} >
-                    Asset ID</FormLabel>
-                    <Input placeholder='Asset ID..' />
-               
-                
+                    
                     <FormLabel pt={5} >Time Quantum</FormLabel>
                     <Input placeholder='In seconds' />
                 
