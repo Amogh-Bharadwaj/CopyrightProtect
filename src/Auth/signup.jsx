@@ -1,6 +1,6 @@
 import React,{useState} from "react"
 import { useNavigate } from "react-router-dom"; 
-import {NewAccount,CreateUser} from "./create_user";
+
 import {
     Flex,
     Stack,
@@ -37,7 +37,8 @@ const SignUp=()=>{
     const [passError, setPassError] = useState(false);
     
     const create_user=()=>{
-      CreateUser(name,pass);
+      fetch(`http://127.0.0.1:5000/auth`)
+      
     }
     
 
