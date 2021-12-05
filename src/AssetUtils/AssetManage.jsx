@@ -26,6 +26,12 @@ import{
 
 const AssetManage =()=>{
     const assets = [{"ID":"4F34F342","NAME":"VIOLIN COMPOSITION"},{"ID":"T668J342","NAME":"POKEMON FANFICTION"},{"ID":"GG44KLM0","NAME":"MECHANICAL SHOE MODEL"},{"ID":"33RRY789","NAME":"GAUSSIAN RESEARCH PAPER"}];
+    const [assetName,setAssetName] = useState("");
+
+    const getAsset=(e)=>{
+        setAssetName(e.target.value);
+        console.log(assetName);
+    }
     return(
         <Flex
          direction="row"
@@ -57,13 +63,13 @@ const AssetManage =()=>{
                  {assets.map((ass)=>{
                     return(
                    <Box
-                    
+                    key={ass.ID}
                     boxShadow="0px 0px 0px 3px black"
                     w="50%"
                     h="15vh"
                     fontSize="sm"
                     textColor="black"
-                    bgGradient="linear(#204DA6,white)"
+                    bgGradient="linear(#204DA6,#17A1A9)"
 
                     >
                         <Text my={5} px={5}>ID: {ass.ID}</Text>
@@ -88,7 +94,9 @@ const AssetManage =()=>{
                 
                 >
                    <FormLabel>Asset Name</FormLabel>
-                   <Input placeholder="Name your asset..."/>
+                   <Input 
+                    onChange={getAsset}
+                    placeholder="Name your asset..."/>
 
                    <Button
                           h="30%"
@@ -108,12 +116,7 @@ const AssetManage =()=>{
   
                         </Button>
 
-               </FormControl>
-
-              
-            
-
-              
+               </FormControl>              
             </VStack>
         </Flex>
 

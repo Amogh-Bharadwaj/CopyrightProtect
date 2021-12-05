@@ -2,6 +2,7 @@ import React,{useState} from "react"
 import { useNavigate } from "react-router-dom"
 import AssetBorrow from "./AssetUtils/AssetBorrow";
 import AssetManage from "./AssetUtils/AssetManage";
+
 import {
     Flex,
     Stack,
@@ -23,6 +24,7 @@ import{
     ArrowRightIcon,
     LockIcon,
 } from "@chakra-ui/icons"
+import AssetRequests from "./AssetUtils/AssetRequests";
 
 const Main =()=>{
     const [utility,setUtility] = useState(<AssetBorrow/>);
@@ -50,9 +52,10 @@ const Main =()=>{
               px={3}
               textColor="white"
               fontSize="xl"
-              justify="center"
+              
               >  
                  <Text
+                 mt={10}
                  py={5}
                  fontSize="2xl"
                  color="#4E84F3"
@@ -73,7 +76,7 @@ const Main =()=>{
 
                     <ListItem>
                          <ListIcon as={ArrowRightIcon} color='white' />
-                         <Link>  Handle Requests </Link>
+                         <Link onClick={()=>{setUtility(<AssetRequests />)}}>  Handle Requests </Link>
                     </ListItem>
 
                 </List>
