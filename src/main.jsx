@@ -1,5 +1,7 @@
 import React,{useState} from "react"
 import { useNavigate } from "react-router-dom"
+import AssetBorrow from "./AssetUtils/AssetBorrow";
+import AssetManage from "./AssetUtils/AssetManage";
 import {
     Flex,
     Stack,
@@ -11,7 +13,10 @@ import {
     InputGroup,
     InputLeftElement,
     Link,
-    Button
+    Button,
+    List,
+    ListItem,
+    ListIcon
 } from "@chakra-ui/react";
 
 import{
@@ -20,6 +25,8 @@ import{
 } from "@chakra-ui/icons"
 
 const Main =()=>{
+    const [utility,setUtility] = useState(<AssetBorrow/>);
+
     return(
 
         <Flex
@@ -36,13 +43,44 @@ const Main =()=>{
            w="full"
            >
             <VStack
-              spacing = {4}
+              spacing = {5}
               w="30%"
-              h="100vh"
+              //h="full"
               bgGradient="linear(to-r, black,#0E3259)"
-              >
+              px={3}
+              textColor="white"
+              fontSize="xl"
+              justify="center"
+              >  
+                 <Text
+                 py={5}
+                 fontSize="2xl"
+                 color="#4E84F3"
+                 >
+                    Copyright Protection
+                 </Text>
+
+                 <List spacing={10}>
+                    <ListItem>
+                         <ListIcon as={ArrowRightIcon} color='white' />
+                         <Link onClick={()=>{setUtility(<AssetManage />)}}>  Manage Assets </Link>
+                    </ListItem>
+
+                    <ListItem>
+                         <ListIcon as={ArrowRightIcon} color='white' />
+                         <Link onClick={()=>{setUtility(<AssetBorrow />)}}>  Borrow Assets </Link>
+                    </ListItem>
+
+                    <ListItem>
+                         <ListIcon as={ArrowRightIcon} color='white' />
+                         <Link>  Handle Requests </Link>
+                    </ListItem>
+
+                </List>
 
               </VStack>
+
+              {utility}
 
            </Flex>
              

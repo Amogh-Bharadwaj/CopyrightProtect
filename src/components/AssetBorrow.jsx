@@ -30,19 +30,20 @@ const AssetBorrow =()=>{
                 <FormControl id='asset-id' isRequired>
                     <FormLabel>Asset ID</FormLabel>
                     <Input placeholder='First name' />
-                </FormControl>
-                <FormControl id='time-quantum' isRequired>
+               
+                
                     <FormLabel>Time Quantum</FormLabel>
                     <Input placeholder='First name' />
-                </FormControl>
-                <FormControl id='price' isRequired>
+                
+               
                     <FormLabel>Price</FormLabel>
                     <Input placeholder='First name' />
-                </FormControl>
-                <FormControl id='numberofseconds' isRequired>
+                
+                
                     <FormLabel>Number of Seconds</FormLabel>
                     <Input placeholder='First name' />
                 </FormControl>
+                
                 <Button 
                 colorScheme="teal"> 
                     Submit

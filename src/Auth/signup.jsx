@@ -23,6 +23,9 @@ const SignUp=()=>{
     let navigate = useNavigate();
     const [name,setName] = useState("");
     const [pass,setPass] = useState("");
+    const [confirmPass,setConfirmPass] = useState("");
+
+    const [passError, setPassError] = useState(false);
 
     
 
@@ -37,6 +40,12 @@ const SignUp=()=>{
         setPass(e.target.value);
         //console.log("Pass",pass);
     }
+
+    const getConfirmPass=(e)=>{ 
+      setConfirmPass(e.target.value);
+      if(confirmPass != pass && confirmPass.length>0)setPassError(true);
+      else setPassError(false);
+  }
 
     return(
         <Flex 
@@ -55,7 +64,7 @@ const SignUp=()=>{
               justify="center"
               textColor="whiteAlpha.100"
             >   
-
+    
                 <Text
                   textColor="blue.400"
                   fontSize={{base:"2xl",md:"4xl"}}
@@ -98,6 +107,7 @@ const SignUp=()=>{
                            children={<LockIcon color="white"/>}
                            />
                            <Input 
+                           type="password"
 
                             focusBorderColor="white"
                             textColor="white"
@@ -113,13 +123,12 @@ const SignUp=()=>{
                            children={<LockIcon color="white"/>}
                            />
                            <Input 
+                           type="password"
 
                             focusBorderColor="white"
                             textColor="white"
-                            onChange={getPass}
+                            onChange={getConfirmPass}
                             placeholder="Confirm password.." />
-
-                       
                         </InputGroup>
 
                         <Button
@@ -157,15 +166,7 @@ const SignUp=()=>{
   
                         </Button>
                 </FormControl>
-              
-               
-
-                
-
-
             </VStack>
-          
-
         </Flex>
     )
 }
