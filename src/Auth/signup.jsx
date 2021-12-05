@@ -1,6 +1,6 @@
 import React,{useState} from "react"
 import { useNavigate } from "react-router-dom"; 
-
+ 
 import {
     Flex,
     Stack,
@@ -14,20 +14,17 @@ import {
     Link,
     Button
 } from "@chakra-ui/react";
-
+ 
 import{
     ArrowRightIcon,
     LockIcon,
 } from "@chakra-ui/icons"
-
-
-
+ 
+ 
+ 
 const SignUp=()=>{
   
-  var Web3 = require('web3');
-  var web3 = new Web3('http://127.0.0.1:7545');
-  const sqlite3 = require('sqlite3').verbose();
-  let db = new sqlite3.Database('production.db');
+  
   
     let navigate = useNavigate();
     const [name,setName] = useState("");
@@ -36,30 +33,42 @@ const SignUp=()=>{
     
     const [passError, setPassError] = useState(false);
     
-    const create_user=()=>{
-      fetch(`http://127.0.0.1:5000/auth`)
-      
+    const createUser=()=>{
+      fetch(
+        `http://127.0.0.1:5000/auth`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            name:name,
+            password:pass
+          }),
+          headers: {
+           "Content-type": "application/json",
+        },
+        }
+      );
+        
     }
     
-
+ 
     const goLogin=()=>{navigate("/login",{replace: false})};
-
+ 
     const getName=(e)=>{
         setName(e.target.value);
         //console.log("Name",name);
     }
-
+ 
     const getPass=(e)=>{
         setPass(e.target.value);
         //console.log("Pass",pass);
     }
-
+ 
     const getConfirmPass=(e)=>{ 
       setConfirmPass(e.target.value);
       if(confirmPass != pass && confirmPass.length>0)setPassError(true);
       else setPassError(false);
   }
-
+ 
     return(
         <Flex 
           direction="column"
@@ -86,15 +95,15 @@ const SignUp=()=>{
                     COPYRIGHT PROTECTION
                   
                 </Text>
-
+ 
                 <Text
                   textColor="blue.200"
                   fontSize={{base:"sm",md:"2xl"}}
                 >
                     A decentralised app for borrowing and publishing assets.
-
+ 
                 </Text>
-
+ 
                 
                   <FormControl 
                    px={5}
@@ -113,7 +122,7 @@ const SignUp=()=>{
                           placeholder="Your name.."></Input>
                         
                         </InputGroup>
-
+ 
                         <InputGroup my={5}>
                          <InputLeftElement 
                            pointerEvents="none"
@@ -121,15 +130,15 @@ const SignUp=()=>{
                            />
                            <Input 
                            type="password"
-
+ 
                             focusBorderColor="white"
                             textColor="white"
                             onChange={getPass}
                             placeholder="Enter your password.." />
-
+ 
                        
                         </InputGroup>
-
+ 
                         <InputGroup my={5}>
                          <InputLeftElement 
                            pointerEvents="none"
@@ -137,13 +146,13 @@ const SignUp=()=>{
                            />
                            <Input 
                            type="password"
-
+ 
                             focusBorderColor="white"
                             textColor="white"
                             onChange={getConfirmPass}
                             placeholder="Confirm password.." />
                         </InputGroup>
-
+ 
                         <Button
                           h="20%"
                           w="100%"
@@ -160,7 +169,7 @@ const SignUp=()=>{
                             <Text fontSize="lg">Sign up</Text>
   
                         </Button>
-
+ 
                         <Button
                           h="20%"
                           w="100%"
@@ -183,5 +192,5 @@ const SignUp=()=>{
         </Flex>
     )
 }
-
+ 
 export default SignUp;
