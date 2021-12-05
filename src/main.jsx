@@ -27,7 +27,8 @@ import{
 import AssetRequests from "./AssetUtils/AssetRequests";
 
 const Main =()=>{
-    const [utility,setUtility] = useState(<AssetBorrow/>);
+    
+    const [utility,setUtility] = useState(<AssetBorrow />);
 
     return(
 
@@ -44,6 +45,7 @@ const Main =()=>{
            h="full"
            w="full"
            >
+
             <VStack
               spacing = {5}
               w="30%"
@@ -60,7 +62,7 @@ const Main =()=>{
                  fontSize="2xl"
                  color="#4E84F3"
                  >
-                    Copyright Protection
+                    COPYRIGHT PROTECTION
                  </Text>
 
                  <List spacing={10}>

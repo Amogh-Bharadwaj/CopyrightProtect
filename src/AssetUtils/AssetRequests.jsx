@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React,{useEffect, useState} from "react"
 import { useNavigate } from "react-router-dom"
 import {
     Flex,
@@ -26,17 +26,56 @@ import{
 } from "@chakra-ui/icons"
 
 const AssetRequests =()=>{
-    const assets = [{"ID":"4F34F342","NAME":"VIOLIN COMPOSITION","PRICE_PER_QUANTUM":"30","TIME_QUANTUM_SECONDS":"4","QUANTUM_COUNT":"5"},
-    {"ID":"T668J342","NAME":"POKEMON FANFICTION","PRICE_PER_QUANTUM":"30","TIME_QUANTUM_SECONDS":"4","QUANTUM_COUNT":"5"},
-    {"ID":"GG44KLM0","NAME":"MECHANICAL SHOE MODEL","PRICE_PER_QUANTUM":"30","TIME_QUANTUM_SECONDS":"4","QUANTUM_COUNT":"5"},
-    {"ID":"33RRY789","NAME":"GAUSSIAN RESEARCH PAPER","PRICE_PER_QUANTUM":"30","TIME_QUANTUM_SECONDS":"4","QUANTUM_COUNT":"5"}];
+    const [incomingAssets,setIncomingAssets] = useState([]);
+    const [sentAssets,setSentAssets] = useState([]);
+    
+    const getIncoming=()=>{
+        fetch(
+            `http://127.0.0.1:5000/incoming`,
+            {
+              method: "GET",
+              headers: {
+               "Content-type": "application/json",
+            },
+            }
+          ).then((response)=>response.json())
+          .then((json)=>{
+            console.log(json);
+            setIncomingAssets(json.incoming);
+           
+          });  
+
+    }
+
+    const getSent=()=>{
+        fetch(
+            `http://127.0.0.1:5000/sent`,
+            {
+              method: "GET",
+              headers: {
+               "Content-type": "application/json",
+            },
+            }
+          ).then((response)=>response.json())
+           .then((json)=>{
+            console.log(json);
+            setSentAssets(json.sent);
+          });  
+        
+    }
+
+    useEffect(()=>{
+        getIncoming();
+        getSent();
+    },[]);
     return(
         <Flex
          direction="row"
          w="70%"
-       
+         h="100vh"
          align="center"
          justify="center"
+         
         >
             <VStack 
             p={6}
@@ -51,14 +90,15 @@ const AssetRequests =()=>{
                     </Text>
                </Center>
 
-               <VStack
+               {incomingAssets.length>0 && (<VStack
                 spacing={5}
                 w="full"
-                
+                h="full"
+                overflowY="scroll"
                 px={5}
                 
                >  
-                 {assets.map((ass)=>{
+                 {incomingAssets.map((ass)=>{
                     return(
                     <Flex 
                     w="full"
@@ -74,7 +114,7 @@ const AssetRequests =()=>{
                     bgGradient="linear(#204DA6,#17A1A9)"
 
                     >
-                        <Text my={5} px={5}>ID: {ass.ID}</Text>
+                        <Text my={5} px={5}>ID: {ass.BORROW_ACCOUNT_ID}</Text>
                         <Text px={5}>{ass.NAME}</Text>
                         <Text px={5}>PRICE: {ass.PRICE_PER_QUANTUM}</Text>
                         <Text px={5}>QUANTUM: {ass.TIME_QUANTUM_SECONDS}</Text>
@@ -94,9 +134,9 @@ const AssetRequests =()=>{
                     </HStack>
                     </Flex>
                     );
-                })      
-            }  
-              </VStack>
+                  })      
+                 }  
+              </VStack>)}
               <Divider py={5} color="white" w="full"/>
 
               <Center my={5}>
@@ -107,19 +147,21 @@ const AssetRequests =()=>{
                     </Text>
                </Center> 
 
-                <VStack
+               {sentAssets.length>0 && (<VStack
                 spacing={5}
                 w="full"
-                
+                h="full"
+                overflowY="scroll"
                 px={5}
                 
                >  
-                 {assets.map((ass)=>{
+                 {sentAssets.map((ass)=>{
                     return(
                     <Flex 
                     w="full"
                     align="center"
                     direction="column">
+
                    <Box
                     rounded="5%"
                     boxShadow="0px 0px 0px 3px black"
@@ -128,9 +170,8 @@ const AssetRequests =()=>{
                     fontSize="sm"
                     textColor="black"
                     bgGradient="linear(#204DA6,#17A1A9)"
-
                     >
-                        <Text my={5} px={5}>ID: {ass.ID}</Text>
+                        <Text my={5} px={5}>ID: {ass.OWNER_ACCOUNT_ID}</Text>
                         <Text px={5}>{ass.NAME}</Text>
                         <Text px={5}>PRICE: {ass.PRICE_PER_QUANTUM}</Text>
                         <Text px={5}>QUANTUM: {ass.TIME_QUANTUM_SECONDS}</Text>
@@ -142,7 +183,7 @@ const AssetRequests =()=>{
                     );
                 })      
             }  
-              </VStack>   
+              </VStack>)}   
             </VStack>
         </Flex>
 

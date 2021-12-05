@@ -34,6 +34,10 @@ const SignUp=()=>{
     const [passError, setPassError] = useState(false);
     
     const createUser=()=>{
+      if(pass!=confirmPass){
+        setPassError("[ Passwords not matching! ]");
+        return;
+      }
       fetch(
         `http://127.0.0.1:5000/auth`,
         {
@@ -46,7 +50,11 @@ const SignUp=()=>{
            "Content-type": "application/json",
         },
         }
-      );
+      ).then((response)=>response.json())
+      .then((json)=>{
+        console.log(json);
+        if(json)navigate('/main');
+      });
         
     }
     

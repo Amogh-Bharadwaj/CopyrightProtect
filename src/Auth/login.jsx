@@ -36,6 +36,28 @@ const Login=()=>{
         //console.log("Pass",pass);
     }
 
+    const loginUser=()=>{
+      
+      fetch(
+        `http://127.0.0.1:5000/login`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            name:name,
+            password:pass
+          }),
+          headers: {
+           "Content-type": "application/json",
+        },
+        }
+      ).then((response)=>response.json())
+      .then((json)=>{
+        console.log(json);
+        if(json)navigate('/main');
+      });
+        
+    }
+
     return(
         <Flex 
           direction="column"
@@ -109,7 +131,7 @@ const Login=()=>{
                         <Button
                           h="20%"
                           w="100%"
-                          
+                          onClick={loginUser}
                           bgColor="#075D9F"
                           textColor="whiteAlpha.600"
                           _hover={{bgColor:"#0C3E66"}}

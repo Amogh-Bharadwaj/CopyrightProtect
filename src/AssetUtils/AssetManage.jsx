@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React,{useEffect, useState} from "react"
 import { useNavigate } from "react-router-dom"
 import {
     Flex,
@@ -16,7 +16,8 @@ import {
     StackDivider,
     Center,
     Divider,
-    Box
+    Box,
+    Spinner
 } from "@chakra-ui/react";
 
 import{
@@ -25,20 +26,63 @@ import{
 } from "@chakra-ui/icons"
 
 const AssetManage =()=>{
-    const assets = [{"ID":"4F34F342","NAME":"VIOLIN COMPOSITION"},{"ID":"T668J342","NAME":"POKEMON FANFICTION"},{"ID":"GG44KLM0","NAME":"MECHANICAL SHOE MODEL"},{"ID":"33RRY789","NAME":"GAUSSIAN RESEARCH PAPER"}];
+    const [assets,setAssets] = useState([]);
     const [assetName,setAssetName] = useState("");
 
     const getAsset=(e)=>{
         setAssetName(e.target.value);
         console.log(assetName);
     }
+
+    const createAsset=()=>{
+        fetch(
+            `http://127.0.0.1:5000/create`,
+            {
+              method: "POST",
+              body: JSON.stringify({
+                assName:assetName
+              }),
+              headers: {
+               "Content-type": "application/json",
+            },
+            }
+          ).then((response)=>response.json())
+          .then((json)=>{
+            console.log(json);
+            window.location.reload(true);
+           
+          });
+    }
+
+    const getAssets=()=>{
+        fetch(
+            `http://127.0.0.1:5000/myassets`,
+            {
+              method: "GET",
+              headers: {
+               "Content-type": "application/json",
+            },
+            }
+          ).then((response)=>response.json())
+          .then((json)=>{
+            
+            console.log(json.assets);
+            setAssets(json.assets);
+          }).then(()=>{console.log(assets);});
+    }
+
+    useEffect(()=>{
+        getAssets();
+    },[]);
+
     return(
         <Flex
          direction="row"
          w="70%"
-       
+         h="100vh"
          align="center"
          justify="center"
+         
         >
             <VStack 
             p={6}
@@ -53,9 +97,11 @@ const AssetManage =()=>{
                     </Text>
                </Center>
 
-               <VStack
+               {assets.length>0 && (<VStack
                 spacing={5}
                 w="full"
+                overflowY="scroll"
+                h="full"
                 
                 px={5}
                 
@@ -63,7 +109,7 @@ const AssetManage =()=>{
                  {assets.map((ass)=>{
                     return(
                    <Box
-                    key={ass.ID}
+                    key={ass.ASSET_ID}
                     rounded="5%"
                     boxShadow="0px 0px 0px 3px black"
                     w="50%"
@@ -73,13 +119,16 @@ const AssetManage =()=>{
                     bgGradient="linear(#204DA6,#17A1A9)"
 
                     >
-                        <Text my={5} px={5}>ID: {ass.ID}</Text>
-                        <Text px={5}>{ass.NAME}</Text>
+                        <Text my={5} px={5}>ACCOUNT_ID: {ass.ACCOUNT_ID}</Text>
+                        <Text my={5} px={5} textColor="red.800">ASSET_ID: {ass.ASSET_ID}</Text>
+                        
                     </Box>
                     );
+
+                    
                 })      
-            }  
-              </VStack>
+            } 
+              </VStack>)}
               <Divider py={5} color="white" w="full"/>
 
               <Center my={5}>
@@ -103,7 +152,7 @@ const AssetManage =()=>{
                           h="30%"
                           w="100%"
                           my={5}
-                          
+                          onClick={createAsset}
                           bgColor="#3C8A4F"
                           textColor="white"
                           _hover={{bgColor:"#1B9372"}}
@@ -122,6 +171,7 @@ const AssetManage =()=>{
         </Flex>
 
     )
+    
 }
 
 export default AssetManage;

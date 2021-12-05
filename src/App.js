@@ -16,7 +16,7 @@ const App=()=>{
 
             <Route exact path="/login" element={<Login/>}/>
 
-            <Route exact path="/main" element={<Main/>}/>
+            <Route exact path="/main" element={<Main />}/>
         </Routes>
       </ChakraProvider>
 
