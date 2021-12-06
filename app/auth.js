@@ -218,3 +218,22 @@ app.get('/incoming',(req,res)=>{
         }
     });
 });
+ 
+ app.post('/decline',(req,res)=>{
+     requester_id = req.body.requester;
+     aid = req.body.assid;
+     let delete_request = `delete from asset_requests where borrow_account_id=(?) and asset_id=(?)`
+
+     
+    db.run(delete_request, [requester_id,aid], function(err) {
+        if (err) {
+         return console.error(err.message);
+        }
+        console.log(`Row(s) deleted ${this.changes}`);
+        res.send({"Status":"Deleted successfully,"});
+    });
+  
+ 
+
+
+ });

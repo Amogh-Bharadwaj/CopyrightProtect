@@ -113,7 +113,7 @@ const AssetManage =()=>{
                     rounded="5%"
                     boxShadow="0px 0px 0px 3px black"
                     w="50%"
-                    h="15vh"
+                    h="25vh"
                     fontSize="sm"
                     textColor="black"
                     bgGradient="linear(#204DA6,#17A1A9)"

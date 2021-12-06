@@ -64,6 +64,28 @@ const AssetRequests =()=>{
         
     }
 
+    const deleteRequest=(req_id,ass_id)=>{
+       
+            fetch(
+                `http://127.0.0.1:5000/decline`,
+                {
+                  method: "POST",
+                  body: JSON.stringify({
+                   requester:req_id,
+                   assid:ass_id
+                  }),
+                  headers: {
+                   "Content-type": "application/json",
+                },
+                }
+              ).then((response)=>response.json())
+               .then((json)=>{
+                console.log(json);
+                window.location.reload(true);
+               
+              });
+    }
+
     useEffect(()=>{
         getIncoming();
         getSent();
@@ -108,7 +130,7 @@ const AssetRequests =()=>{
                     rounded="5%"
                     boxShadow="0px 0px 0px 3px black"
                     w="50%"
-                    h="25vh"
+                    h="30vh"
                     fontSize="sm"
                     textColor="black"
                     bgGradient="linear(#204DA6,#17A1A9)"
@@ -124,13 +146,20 @@ const AssetRequests =()=>{
                     <HStack 
                      mt={5} 
                      spacing={5}>
+
                         <Button 
                          bgColor="#15C34B"
                          _hover={{bg:"green"}}
-                         >Accept</Button> 
+                         > Accept
+                         </Button> 
+
                          <Button 
+                          onClick={() => deleteRequest(ass.BORROW_ACCOUNT_ID,ass.ASSET_ID)}
                           bgColor="red.700"
-                          _hover={{bg:"red.800"}}>Decline</Button>
+                          _hover={{bg:"red.800"}}>
+                              Decline
+                          </Button>
+
                     </HStack>
                     </Flex>
                     );
@@ -166,7 +195,7 @@ const AssetRequests =()=>{
                     rounded="5%"
                     boxShadow="0px 0px 0px 3px black"
                     w="50%"
-                    h="25vh"
+                    h="30vh"
                     fontSize="sm"
                     textColor="black"
                     bgGradient="linear(#204DA6,#17A1A9)"
